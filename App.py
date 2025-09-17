@@ -1,47 +1,72 @@
 import streamlit as st
 
-# Page setup
-st.set_page_config(page_title="🌱 Smart Crop Advisory", page_icon="🌾", layout="centered")
+# --- Seed requirement (kg per acre) ---
+seed_rate = {
+    "rice": 30,
+    "wheat": 40,
+    "maize": 20,
+    "millet": 10
+}
+
+# --- Soil advice ---
+soil_advice = {
+    "clay": {"en": "Clay soil holds water well, good for Rice.", "ta": "களிமண் மண் தண்ணீரை நன்றாக பிடிக்கும், அரிசிக்கு ஏற்றது."},
+    "sandy": {"en": "Sandy soil drains quickly, good for groundnut & millet.", "ta": "மணல் மண் விரைவாக வடிகிறது, நிலக்கடலை மற்றும் கேழ்வரகு வளர்க்க ஏற்றது."},
+    "loamy": {"en": "Loamy soil is rich and suitable for most crops.", "ta": "களிமண் கலந்த மண்வகை பல பயிர்களுக்கு ஏற்றது."},
+    "red": {"en": "Red soil is good for cotton, pulses, and groundnut.", "ta": "சிவப்பு மண் பருத்தி, பருப்பு மற்றும் நிலக்கடலைக்கு நல்லது."},
+    "black": {"en": "Black soil retains moisture, best for cotton & wheat.", "ta": "கருப்பு மண் ஈரத்தை தக்க வைக்கும், பருத்தி மற்றும் கோதுமைக்கு ஏற்றது."}
+}
+
+# --- UI ---
+st.set_page_config(page_title="🌾 Smart Crop Advisory", layout="centered")
 
 st.title("🌾 Smart Crop Advisory")
 
-# User inputs
-ph = st.number_input("Enter Soil pH:", min_value=0.0, max_value=14.0, step=0.1)
-rain = st.number_input("Enter Rainfall (mm):", min_value=0.0, step=1.0)
-crop = st.selectbox("Select Crop:", ["Rice", "Wheat", "Maize", "Millet", "Other"])
+# Language selection
+lang = st.selectbox("Select Language / மொழியைத் தேர்ந்தெடுக்கவும்:", ["English", "தமிழ்"])
 
-if st.button("Get Advice ✅"):
+# Inputs
+ph = st.number_input("Soil pH:", step=0.1)
+rain = st.number_input("Rainfall (mm):", step=1)
+crop = st.selectbox("Crop:", ["Rice", "Wheat", "Maize", "Millet"])
+soil = st.selectbox("Soil Type:", ["Clay", "Sandy", "Loamy", "Red", "Black"])
+land = st.number_input("Land Size (in acres):", step=1)
+
+if st.button("Get Advice"):
+    crop_key = crop.lower()
     tips = []
 
-    # Soil pH advice
+    # pH advice
     if ph < 6:
-        tips.append("⚠️ Soil is acidic → Apply lime to balance pH.")
+        tips.append({"en": "⚠️ Soil is acidic → Apply lime.", "ta": "⚠️ மண் அமிலமாக உள்ளது → சுண்ணாம்பு சேர்க்கவும்."})
     elif ph > 7.5:
-        tips.append("⚠️ Soil is alkaline → Add gypsum or compost.")
+        tips.append({"en": "⚠️ Soil is alkaline → Add gypsum or compost.", "ta": "⚠️ மண் காரமாக உள்ளது → ஜிப்சம் அல்லது உரமிடவும்."})
     else:
-        tips.append("✅ Soil pH is suitable for most crops.")
+        tips.append({"en": "✅ Soil pH is suitable.", "ta": "✅ மண்ணின் pH ஏற்றதாக உள்ளது."})
 
     # Rainfall advice
     if rain < 300:
-        tips.append("⚠️ Rainfall is low → Irrigation required.")
+        tips.append({"en": "⚠️ Low rainfall → Irrigation required.", "ta": "⚠️ குறைந்த மழை → பாசனம் தேவை."})
     elif rain > 1200:
-        tips.append("⚠️ Excess rainfall → Ensure drainage system.")
+        tips.append({"en": "⚠️ Excess rainfall → Ensure drainage.", "ta": "⚠️ அதிக மழை → வடிகால் வசதி செய்யவும்."})
     else:
-        tips.append("✅ Rainfall is sufficient for farming.")
+        tips.append({"en": "✅ Rainfall is sufficient.", "ta": "✅ மழை போதுமானதாக உள்ளது."})
 
-    # Crop-specific advice
-    if crop == "Rice":
-        tips.append("🌾 Rice: Needs standing water and clay soil.")
-    elif crop == "Wheat":
-        tips.append("🌿 Wheat: Prefers neutral soil and moderate irrigation.")
-    elif crop == "Maize":
-        tips.append("🌽 Maize: Requires nitrogen-rich soil, apply urea carefully.")
-    elif crop == "Millet":
-        tips.append("🌱 Millets: Grow well in dry, drought-prone areas.")
-    else:
-        tips.append("ℹ️ Consult local agri office for this crop.")
+    # Soil advice
+    tips.append(soil_advice[soil.lower()])
+
+    # Seed requirement
+    if crop_key in seed_rate:
+        required_seed = seed_rate[crop_key] * land
+        tips.append({
+            "en": f"For {land} acres, you need approx {required_seed} kg of {crop}.",
+            "ta": f"{land} ஏக்கருக்கு, சுமார் {required_seed} கிலோ {crop} விதைகள் தேவை."
+        })
 
     # Display result
-    st.subheader(f"Advisory for {crop}")
-    for t in tips:
-        st.write("- " + t)
+    st.subheader(f"🌱 Advisory for {crop}")
+    for tip in tips:
+        if lang == "English":
+            st.write("- " + tip["en"])
+        else:
+            st.write("- " + tip["ta"])
