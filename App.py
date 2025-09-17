@@ -53,7 +53,7 @@ if st.button("Get Advice/அறிவுரை பெற"):
         tips.append({"en": "✅ Rainfall is sufficient.", "ta": "✅ மழை போதுமானதாக உள்ளது."})
 
     # Soil advice
-    tips.append(soil_advice[soil.lower()])
+    tips.append(soil_advice[soil])
 
     # Seed requirement
     if crop_key in seed_rate:
