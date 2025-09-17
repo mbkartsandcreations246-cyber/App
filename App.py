@@ -28,11 +28,7 @@ lang = st.selectbox("Select Language/மொழியைத் தேர்ந்
 # Inputs
 ph = st.number_input("Soil pH/மண்ணின் அமிலத்தன்மை:", step=0.1)
 rain = st.number_input("Rainfall/மழைப்பொழிவு (mm):", step=1)
-crop = st.selectbox("Crop/பயிர்:", ["Rice/
-அரிசி", "Wheat/
-கோதுமை", "Maize/
-சோளம்", "Millet/
-தினை"])
+crop = st.selectbox("Crop/பயிர்:", ["Rice/அரிசி", "Wheat/கோதுமை", "Maize/சோளம்", "Millet/தினை"])
 soil = st.selectbox("Soil Type/மண் வகை", ["Clay/களிமண்", "Sandy/மணல்", "Loamy/களிமண் கலந்த", "Red/செம்மண்", "Black/கரிசல் மண் "])
 land = st.number_input("Land Size/நில அளவு(in acres/ஏக்கர்):", step=1)
 
