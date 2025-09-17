@@ -2,19 +2,19 @@ import streamlit as st
 
 # --- Seed requirement (kg per acre) ---
 seed_rate = {
-    "rice": 30,
-    "wheat": 40,
-    "maize": 20,
-    "millet": 10
+    "rice/அரிசி": 30,
+    "wheat/கோதுமை": 40,
+    "maize/சோளம்": 20,
+    "millet/தினை": 10
 }
 
 # --- Soil advice ---
 soil_advice = {
-    "clay": {"en": "Clay soil holds water well, good for Rice.", "ta": "களிமண் மண் தண்ணீரை நன்றாக பிடிக்கும், அரிசிக்கு ஏற்றது."},
-    "sandy": {"en": "Sandy soil drains quickly, good for groundnut & millet.", "ta": "மணல் மண் விரைவாக வடிகிறது, நிலக்கடலை மற்றும் கேழ்வரகு வளர்க்க ஏற்றது."},
-    "loamy": {"en": "Loamy soil is rich and suitable for most crops.", "ta": "களிமண் கலந்த மண்வகை பல பயிர்களுக்கு ஏற்றது."},
-    "red": {"en": "Red soil is good for cotton, pulses, and groundnut.", "ta": "சிவப்பு மண் பருத்தி, பருப்பு மற்றும் நிலக்கடலைக்கு நல்லது."},
-    "black": {"en": "Black soil retains moisture, best for cotton & wheat.", "ta": "கருப்பு மண் ஈரத்தை தக்க வைக்கும், பருத்தி மற்றும் கோதுமைக்கு ஏற்றது."}
+    "Clay/களிமண்": {"en": "Clay soil holds water well, good for Rice.", "ta": "களிமண் மண் தண்ணீரை நன்றாக பிடிக்கும், அரிசிக்கு ஏற்றது."},
+    "Sandy/மணல்": {"en": "Sandy soil drains quickly, good for groundnut & millet.", "ta": "மணல் மண் விரைவாக வடிகிறது, நிலக்கடலை மற்றும் கேழ்வரகு வளர்க்க ஏற்றது."},
+    "loamy/களிமண் கலந்த": {"en": "Loamy soil is rich and suitable for most crops.", "ta": "களிமண் கலந்த மண்வகை பல பயிர்களுக்கு ஏற்றது."},
+    "red/செம்மண்": {"en": "Red soil is good for cotton, pulses, and groundnut.", "ta": "சிவப்பு மண் பருத்தி, பருப்பு மற்றும் நிலக்கடலைக்கு நல்லது."},
+    "black/கரிசல்": {"en": "Black soil retains moisture, best for cotton & wheat.", "ta": "கருப்பு மண் ஈரத்தை தக்க வைக்கும், பருத்தி மற்றும் கோதுமைக்கு ஏற்றது."}
 }
 
 # --- UI ---
